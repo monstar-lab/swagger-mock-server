@@ -1,0 +1,495 @@
+openapi: 3.0.0
+info:
+    description: User Application API Definition
+    version: 0.0.1
+    title: USER API
+servers:
+    - url: http://localhost:8083
+paths:
+    /api/v1/user/orders:
+        get:
+            tags:
+              - Orders
+            summary: 注文・約定履歴
+            description: 注文・約定履歴の情報を取得します
+            parameters:
+              - in: query
+                name: keyword
+                schema:
+                    type: string
+                required: false
+                example: 3197
+                description: 銘柄名・コードなどを入力
+              - in: query
+                name: order_status
+                schema:
+                    type: string
+                    enum: [ORDER_STATUS_ORDER_IN, ORDER_STATUS_INVALID, ORDER_STATUS_EXECUTION_ALREADY, ORDER_STATUS_OTHERS]
+                required: false
+                example: ORDER_STATUS_VALID
+                description: 注文状態(注文中、失効・取り消し、約定、その他・エラー)
+              - in: query
+                name: start_time
+                schema:
+                    type: string
+                required: false
+                example: '2019-01-05T14:20:00Z'
+                description: 期間を指定する：何日から
+              - in: query
+                name: end_time
+                schema:
+                    type: string
+                required: false
+                example: '2019-01-05T14:20:00Z'
+                description: 期間を指定する：何日まで
+              - in: query
+                name: order_by
+                schema:
+                    type: string
+                required: false
+                example: 'id'
+                description: Sort order keyword
+              - in: query
+                name: page_token
+                schema:
+                    type: integer 
+                    format: int64
+                required: false
+                example: 2
+                description: Request page number
+              - in: query
+                name: page_size
+                schema:
+                    type: integer 
+                    format: int64
+                required: false
+                example: 10
+                description: Default page_size is 10.
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                items:
+                                    $ref: '#/components/schemas/OrderList'
+                                example:
+                                  next_page_token: 2
+                                  total: 12345
+                                  listData:
+                                    - id: 1
+                                      order_id: '001'
+                                      order_status: ORDER_STATUS_VALID
+                                      security_name: S&P500指数(円ヘッジ)
+                                      security_code: 3197
+                                      market_venue: 東証
+                                      order_side_name: SELL
+                                      order_condition: 逆指値/359以下
+                                      order_quantity: 44
+                                      execution_quantity: 333
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 2
+                                      order_id: '002'
+                                      order_status: ORDER_STATUS_VALID
+                                      security_name: 極楽湯HD
+                                      security_code: 3195
+                                      market_venue: JQ
+                                      order_side_name: SELL
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 32544
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 3
+                                      order_id: '003'
+                                      order_status: ORDER_STATUS_VALID
+                                      security_name: 極楽湯HD33
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: BUY
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 4
+                                      order_id: '004'
+                                      order_status: ORDER_STATUS_ERROR
+                                      security_name: 極楽湯HD33ee
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: BUY
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 5
+                                      order_id: '005'
+                                      order_status: ORDER_STATUS_ERROR
+                                      security_name: 極楽湯HD33ee
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: ETF_BUY
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 6
+                                      order_id: '006'
+                                      order_status: ORDER_STATUS_ERROR
+                                      security_name: 極楽湯HD33ee
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: ETF_BUY
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 7
+                                      order_id: '007'
+                                      order_status: ORDER_STATUS_ERROR
+                                      security_name: 極楽湯HD33ee
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: ETF_BUY
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 8
+                                      order_id: '008'
+                                      order_status: ORDER_STATUS_ERROR
+                                      security_name: 極楽湯HD33ee
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: SELL
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 9
+                                      order_id: '009'
+                                      order_status: ORDER_STATUS_ERROR
+                                      security_name: 極楽湯HD33ee
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: SELL
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'
+                                    - id: 10
+                                      order_id: '010'
+                                      order_status: ORDER_STATUS_ERROR
+                                      security_name: 極楽湯HD33ee
+                                      security_code: 3144
+                                      market_venue: JQ
+                                      order_side_name: BUY
+                                      order_condition: 成行
+                                      order_quantity: 333
+                                      execution_quantity: 555
+                                      execution_price: 325
+                                      accept_datetime: '2015-06-23T17:32:28Z'
+                                      expiration_date: '2015-06-23T17:32:28Z'    
+        post:
+            tags:
+              - Orders
+            summary: 新規購入売却
+            description: 購入売却を新規します
+            parameters:
+              - in: "body"
+                name: "body"
+                description: "Order object that needs to be sended to JIP"
+                required: true
+                schema:
+                    $ref: '#/components/schemas/OrderConfirm'
+            responses:
+                '201':
+                    description: successful operation
+                '405':
+                    description: "Invalid input"    
+                '400':
+                    description: "Invalid status value"   
+    # /api/v1/user/brands:
+    #     get:
+    #         tags:
+    #           - Brands
+    #         summary: 銘柄一覧
+    #         description: 銘柄一覧を取得します
+    #         responses:
+    #             '200':
+    #                 description: successful operation
+    /api/v1/user/brands/{brand_id}:
+        get:
+            tags:
+              - Brands
+            summary: 銘柄詳細
+            description: Get server time for order validation shown.
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:    
+    /api/v1/user/check/start_order:
+        get:
+            tags:
+              - Check
+            summary:  Start_order check
+            description:  Check if the trade can be continued when click button on brand detail page.
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: Object
+                                items:
+                                    $ref: '#/components/schemas/StartOrderCheckResponse'
+                                example: 
+                                     over_capacity: true
+                                     over_limit: true
+                                     is_insider: true
+    /api/v1/user/check/confirm_order:
+        get:
+            tags:
+              - Check
+            summary: Confirm_order check
+            description: Check if the trade can be continued when click order confirm button.
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: Object
+                                items:
+                                    $ref: '#/components/schemas/ConfirmOrderCheckResponse'
+                                example:
+                                    is_insider: true
+                                    is_unstable_operation: true 
+                                    over_limit: true
+    /api/v1/user/server_time:
+        get:
+            tags:
+              - Tools
+            summary: Server time
+            description: Get server time for order validation shown.
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                                example: '2015-06-23T17:32:28Z'                                                          
+components:
+    schemas:
+        OrderList:
+          type: object
+          properties:
+            next_page_token:
+              type: integer
+              format: int64
+              example: 2
+              description: Next page number
+            total:
+              type: integer
+              format: int64
+              example: 12345
+              description: Total Items number
+            list:
+              type: array
+              items:
+                $ref: '#/components/schemas/Order'
+
+        Order:
+            type: object
+            properties:
+              id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  description: id
+              order_id:
+                    type: string
+                    example: '001'
+                    description: 注文番号
+              order_status:
+                  type: string
+                  example: ORDER_STATUS_VALID
+                  description: 状態（有効、エラー，失効）
+                  enum:
+                      - ORDER_STATUS_VALID
+                      - ORDER_STATUS_ERROR
+                      - ORDER_STATUS_INVALID
+              security_name:
+                  type: string
+                  example: すかいらーく
+                  description: 銘柄名
+              security_code: 
+                  type: string
+                  example: 3197
+                  description: 銘柄コード
+              market_venue:
+                  type: string
+                  example: 東証
+                  description: 市場区分
+              order_side_name: 
+                  type: string
+                  example: 現物売り
+                  description: 売買種別（現物売り、現物買い、ETF買い）
+                  enum:
+                      - SELL
+                      - BUY
+                      - ETF_BUY
+              order_condition: 
+                  type: string
+                  description: 注文タイプ/条件
+              order_quantity:
+                  type: integer
+                  format: int64
+                  example: 100
+                  description: 発注数
+              execution_quantity: 
+                  type: integer
+                  format: int64
+                  example: 50
+                  description: 約定数
+              execution_price:
+                  type: integer
+                  format: int64
+                  description: 平均約定単価
+              accept_datetime:
+                  type: string
+                  format: date-time
+                  example: '2019-01-05T14:20:00Z'
+                  description: 受注日時
+              expiration_date: 
+                  type: string
+                  format: date-time
+                  example: '2019-01-05T14:20:00Z'
+                  description: 有効期限
+        
+        StartOrderCheckResponse:
+          type: object
+          properties:
+            over_capacity:
+              type: boolean
+              example: false
+            over_limit:
+              type: boolean
+              example: false
+            is_insider:
+              type: boolean
+              example: false
+
+        ConfirmOrderCheckResponse:
+          type: object
+          properties:
+            is_unstable_operation:
+              type: boolean
+              example: false  
+            over_limit:
+              type: boolean
+              example: false
+            is_insider:
+              type: boolean
+              example: false
+
+        OrderConfirm:
+          type: object
+          properties:
+            order_group_id:
+              type: integer
+              format: int64
+              example: 2
+              description: 注文グループID
+            security_code: 
+              type: string
+              example: 3197
+              description: 銘柄コード
+            order_type:
+              type: string
+              example: market
+              description: 注文方法:指値、成行等の発注条件
+              enum:
+                  - market
+                  - limit
+                  - reverseLimit
+                  - marketOnOpen
+                  - marketOnClose
+                  - limitToMarket  
+            time_in_force:
+              type: string
+              example: market
+              description: // 執行条件:注文執行条件(時間条件)
+              enum:
+                  - market
+                  - limit
+            order_price:
+              type: string
+              example: 667788
+              description: 注文価格
+            hold_account_type:
+              type: string
+              example: hold_account_type
+              description:  預り口座種別
+            stock_order_side:
+            
+            market_venue:
+              type: string
+              example: market_venue
+              description: 市場
+            is_stop_order:
+              type: boolean
+              example: true
+              description: 逆指値注文フラグ
+            stop_price:
+              type: string
+              example: 44556
+              description: 逆指値注文価格
+            expiration_type:
+              type: string
+              example: market
+              description: 注文期限種別
+              enum:
+                  - DAY
+                  - WEEK
+                  - GTD
+            expiration_date: 
+              type: string
+              format: date-time
+              example: '2019-01-05T14:20:00Z'
+              description: 注文の有効期間を指定
+            customer_id:
+              type: integer
+              format: int32
+              example: 2
+              description: 顧客ID:発注した顧客のID
+            agency_sales_id:
+              type: integer
+              format: int32
+              example: 2
+              description: 扱者:顧客の扱者
+            agency_id:
+              type: integer
+              format: int32
+              example: 2
+              description: 利用業者:顧客が経由している業者 
