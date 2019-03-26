@@ -633,17 +633,12 @@ export const OrdersApiFetchParamCreator = function (configuration?: Configuratio
         /**
          * 購入売却を新規します
          * @summary 新規購入売却
-         * @param {OrderConfirm} body Order object that needs to be sended to JIP
+         * @param {Array<OrderConfirm>} [body] Order object that needs to be sended to JIP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1UserOrdersPost(body: OrderConfirm, options: any = {}): FetchArgs {
-            // verify required parameter 'body' is not null or undefined
-            if (body === null || body === undefined) {
-                throw new RequiredError('body','Required parameter body was null or undefined when calling apiV1UserOrdersPost.');
-            }
-            const localVarPath = `/api/v1/user/orders`
-                .replace(`{${"body"}}`, encodeURIComponent(String(body)));
+        apiV1UserOrdersPost(body?: Array<OrderConfirm>, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/user/orders`;
             const localVarUrlObj = url.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -652,6 +647,10 @@ export const OrdersApiFetchParamCreator = function (configuration?: Configuratio
             const localVarRequestOptions = Object.assign({ method: 'POST' }, baseOptions, options);
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (body) {
+                localVarQueryParameter['body'] = body;
+            }
 
             localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
             // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
@@ -700,11 +699,11 @@ export const OrdersApiFp = function(configuration?: Configuration) {
         /**
          * 購入売却を新規します
          * @summary 新規購入売却
-         * @param {OrderConfirm} body Order object that needs to be sended to JIP
+         * @param {Array<OrderConfirm>} [body] Order object that needs to be sended to JIP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1UserOrdersPost(body: OrderConfirm, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+        apiV1UserOrdersPost(body?: Array<OrderConfirm>, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
             const localVarFetchArgs = OrdersApiFetchParamCreator(configuration).apiV1UserOrdersPost(body, options);
             return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
                 return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
@@ -744,11 +743,11 @@ export const OrdersApiFactory = function (configuration?: Configuration, fetch?:
         /**
          * 購入売却を新規します
          * @summary 新規購入売却
-         * @param {OrderConfirm} body Order object that needs to be sended to JIP
+         * @param {Array<OrderConfirm>} [body] Order object that needs to be sended to JIP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1UserOrdersPost(body: OrderConfirm, options?: any) {
+        apiV1UserOrdersPost(body?: Array<OrderConfirm>, options?: any) {
             return OrdersApiFp(configuration).apiV1UserOrdersPost(body, options)(fetch, basePath);
         },
     };
@@ -782,12 +781,12 @@ export class OrdersApi extends BaseAPI {
     /**
      * 購入売却を新規します
      * @summary 新規購入売却
-     * @param {OrderConfirm} body Order object that needs to be sended to JIP
+     * @param {Array<OrderConfirm>} [body] Order object that needs to be sended to JIP
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public apiV1UserOrdersPost(body: OrderConfirm, options?: any) {
+    public apiV1UserOrdersPost(body?: Array<OrderConfirm>, options?: any) {
         return OrdersApiFp(this.configuration).apiV1UserOrdersPost(body, options)(this.fetch, this.basePath);
     }
 

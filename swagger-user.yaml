@@ -214,10 +214,9 @@ paths:
             summary: 新規購入売却
             description: 購入売却を新規します
             parameters:
-              - in: body
+              - in: query
                 name: body
                 description: "Order object that needs to be sended to JIP"
-                required: true
                 schema:
                   items:
                       $ref: '#/components/schemas/OrderConfirm'
