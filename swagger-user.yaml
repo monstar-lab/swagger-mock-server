@@ -214,39 +214,21 @@ paths:
             summary: 新規購入売却
             description: 購入売却を新規します
             parameters:
-              - in: "body"
-                name: "body"
+              - in: body
+                name: body
                 description: "Order object that needs to be sended to JIP"
                 required: true
                 schema:
-                    $ref: '#/components/schemas/OrderConfirm'
+                  items:
+                      $ref: '#/components/schemas/OrderConfirm'
+                  
             responses:
                 '201':
                     description: successful operation
                 '405':
                     description: "Invalid input"    
                 '400':
-                    description: "Invalid status value"   
-    # /api/v1/user/brands:
-    #     get:
-    #         tags:
-    #           - Brands
-    #         summary: 銘柄一覧
-    #         description: 銘柄一覧を取得します
-    #         responses:
-    #             '200':
-    #                 description: successful operation
-    /api/v1/user/brands/{brand_id}:
-        get:
-            tags:
-              - Brands
-            summary: 銘柄詳細
-            description: Get server time for order validation shown.
-            responses:
-                '200':
-                    description: successful operation
-                    content:
-                        application/json:    
+                    description: "Invalid status value"      
     /api/v1/user/check/start_order:
         get:
             tags:
@@ -318,7 +300,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Order'
-
         Order:
             type: object
             properties:
@@ -386,7 +367,6 @@ components:
                   format: date-time
                   example: '2019-01-05T14:20:00Z'
                   description: 有効期限
-        
         StartOrderCheckResponse:
           type: object
           properties:
@@ -399,7 +379,6 @@ components:
             is_insider:
               type: boolean
               example: false
-
         ConfirmOrderCheckResponse:
           type: object
           properties:
@@ -412,7 +391,6 @@ components:
             is_insider:
               type: boolean
               example: false
-
         OrderConfirm:
           type: object
           properties:
@@ -451,8 +429,6 @@ components:
               type: string
               example: hold_account_type
               description:  預り口座種別
-            stock_order_side:
-            
             market_venue:
               type: string
               example: market_venue

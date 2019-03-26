@@ -78,6 +78,720 @@ export class RequiredError extends Error {
     }
 }
 
+/**
+ * 
+ * @export
+ * @interface ConfirmOrderCheckResponse
+ */
+export interface ConfirmOrderCheckResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConfirmOrderCheckResponse
+     */
+    is_unstable_operation?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConfirmOrderCheckResponse
+     */
+    over_limit?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConfirmOrderCheckResponse
+     */
+    is_insider?: boolean;
+}
+
+/**
+ * 
+ * @export
+ * @interface Order
+ */
+export interface Order {
+    /**
+     * id
+     * @type {number}
+     * @memberof Order
+     */
+    id?: number;
+    /**
+     * 注文番号
+     * @type {string}
+     * @memberof Order
+     */
+    order_id?: string;
+    /**
+     * 状態（有効、エラー，失効）
+     * @type {string}
+     * @memberof Order
+     */
+    order_status?: Order.OrderStatusEnum;
+    /**
+     * 銘柄名
+     * @type {string}
+     * @memberof Order
+     */
+    security_name?: string;
+    /**
+     * 銘柄コード
+     * @type {string}
+     * @memberof Order
+     */
+    security_code?: string;
+    /**
+     * 市場区分
+     * @type {string}
+     * @memberof Order
+     */
+    market_venue?: string;
+    /**
+     * 売買種別（現物売り、現物買い、ETF買い）
+     * @type {string}
+     * @memberof Order
+     */
+    order_side_name?: Order.OrderSideNameEnum;
+    /**
+     * 注文タイプ/条件
+     * @type {string}
+     * @memberof Order
+     */
+    order_condition?: string;
+    /**
+     * 発注数
+     * @type {number}
+     * @memberof Order
+     */
+    order_quantity?: number;
+    /**
+     * 約定数
+     * @type {number}
+     * @memberof Order
+     */
+    execution_quantity?: number;
+    /**
+     * 平均約定単価
+     * @type {number}
+     * @memberof Order
+     */
+    execution_price?: number;
+    /**
+     * 受注日時
+     * @type {Date}
+     * @memberof Order
+     */
+    accept_datetime?: Date;
+    /**
+     * 有効期限
+     * @type {Date}
+     * @memberof Order
+     */
+    expiration_date?: Date;
+}
+
+/**
+ * @export
+ * @namespace Order
+ */
+export namespace Order {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum OrderStatusEnum {
+        VALID = 'ORDER_STATUS_VALID',
+        ERROR = 'ORDER_STATUS_ERROR',
+        INVALID = 'ORDER_STATUS_INVALID'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum OrderSideNameEnum {
+        SELL = 'SELL',
+        BUY = 'BUY',
+        ETFBUY = 'ETF_BUY'
+    }
+}
+
+/**
+ * 
+ * @export
+ * @interface OrderConfirm
+ */
+export interface OrderConfirm {
+    /**
+     * 注文グループID
+     * @type {number}
+     * @memberof OrderConfirm
+     */
+    order_group_id?: number;
+    /**
+     * 銘柄コード
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    security_code?: string;
+    /**
+     * 注文方法:指値、成行等の発注条件
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    order_type?: OrderConfirm.OrderTypeEnum;
+    /**
+     * // 執行条件:注文執行条件(時間条件)
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    time_in_force?: OrderConfirm.TimeInForceEnum;
+    /**
+     * 注文価格
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    order_price?: string;
+    /**
+     * 預り口座種別
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    hold_account_type?: string;
+    /**
+     * 市場
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    market_venue?: string;
+    /**
+     * 逆指値注文フラグ
+     * @type {boolean}
+     * @memberof OrderConfirm
+     */
+    is_stop_order?: boolean;
+    /**
+     * 逆指値注文価格
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    stop_price?: string;
+    /**
+     * 注文期限種別
+     * @type {string}
+     * @memberof OrderConfirm
+     */
+    expiration_type?: OrderConfirm.ExpirationTypeEnum;
+    /**
+     * 注文の有効期間を指定
+     * @type {Date}
+     * @memberof OrderConfirm
+     */
+    expiration_date?: Date;
+    /**
+     * 顧客ID:発注した顧客のID
+     * @type {number}
+     * @memberof OrderConfirm
+     */
+    customer_id?: number;
+    /**
+     * 扱者:顧客の扱者
+     * @type {number}
+     * @memberof OrderConfirm
+     */
+    agency_sales_id?: number;
+    /**
+     * 利用業者:顧客が経由している業者
+     * @type {number}
+     * @memberof OrderConfirm
+     */
+    agency_id?: number;
+}
+
+/**
+ * @export
+ * @namespace OrderConfirm
+ */
+export namespace OrderConfirm {
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum OrderTypeEnum {
+        Market = 'market',
+        Limit = 'limit',
+        ReverseLimit = 'reverseLimit',
+        MarketOnOpen = 'marketOnOpen',
+        MarketOnClose = 'marketOnClose',
+        LimitToMarket = 'limitToMarket'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum TimeInForceEnum {
+        Market = 'market',
+        Limit = 'limit'
+    }
+    /**
+     * @export
+     * @enum {string}
+     */
+    export enum ExpirationTypeEnum {
+        DAY = 'DAY',
+        WEEK = 'WEEK',
+        GTD = 'GTD'
+    }
+}
+
+/**
+ * 
+ * @export
+ * @interface OrderList
+ */
+export interface OrderList {
+    /**
+     * Next page number
+     * @type {number}
+     * @memberof OrderList
+     */
+    next_page_token?: number;
+    /**
+     * Total Items number
+     * @type {number}
+     * @memberof OrderList
+     */
+    total?: number;
+    /**
+     * 
+     * @type {Array<Order>}
+     * @memberof OrderList
+     */
+    list?: Array<Order>;
+}
+
+/**
+ * 
+ * @export
+ * @interface StartOrderCheckResponse
+ */
+export interface StartOrderCheckResponse {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StartOrderCheckResponse
+     */
+    over_capacity?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StartOrderCheckResponse
+     */
+    over_limit?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof StartOrderCheckResponse
+     */
+    is_insider?: boolean;
+}
+
+
+/**
+ * CheckApi - fetch parameter creator
+ * @export
+ */
+export const CheckApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Check if the trade can be continued when click order confirm button.
+         * @summary Confirm_order check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserCheckConfirmOrderGet(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/user/check/confirm_order`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, baseOptions, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Check if the trade can be continued when click button on brand detail page.
+         * @summary Start_order check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserCheckStartOrderGet(options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/user/check/start_order`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, baseOptions, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CheckApi - functional programming interface
+ * @export
+ */
+export const CheckApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * Check if the trade can be continued when click order confirm button.
+         * @summary Confirm_order check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserCheckConfirmOrderGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<ConfirmOrderCheckResponse>> {
+            const localVarFetchArgs = CheckApiFetchParamCreator(configuration).apiV1UserCheckConfirmOrderGet(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * Check if the trade can be continued when click button on brand detail page.
+         * @summary Start_order check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserCheckStartOrderGet(options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<StartOrderCheckResponse>> {
+            const localVarFetchArgs = CheckApiFetchParamCreator(configuration).apiV1UserCheckStartOrderGet(options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * CheckApi - factory interface
+ * @export
+ */
+export const CheckApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * Check if the trade can be continued when click order confirm button.
+         * @summary Confirm_order check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserCheckConfirmOrderGet(options?: any) {
+            return CheckApiFp(configuration).apiV1UserCheckConfirmOrderGet(options)(fetch, basePath);
+        },
+        /**
+         * Check if the trade can be continued when click button on brand detail page.
+         * @summary Start_order check
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserCheckStartOrderGet(options?: any) {
+            return CheckApiFp(configuration).apiV1UserCheckStartOrderGet(options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * CheckApi - object-oriented interface
+ * @export
+ * @class CheckApi
+ * @extends {BaseAPI}
+ */
+export class CheckApi extends BaseAPI {
+    /**
+     * Check if the trade can be continued when click order confirm button.
+     * @summary Confirm_order check
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CheckApi
+     */
+    public apiV1UserCheckConfirmOrderGet(options?: any) {
+        return CheckApiFp(this.configuration).apiV1UserCheckConfirmOrderGet(options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * Check if the trade can be continued when click button on brand detail page.
+     * @summary Start_order check
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CheckApi
+     */
+    public apiV1UserCheckStartOrderGet(options?: any) {
+        return CheckApiFp(this.configuration).apiV1UserCheckStartOrderGet(options)(this.fetch, this.basePath);
+    }
+
+}
+
+/**
+ * OrdersApi - fetch parameter creator
+ * @export
+ */
+export const OrdersApiFetchParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 注文・約定履歴の情報を取得します
+         * @summary 注文・約定履歴
+         * @param {string} [keyword] 銘柄名・コードなどを入力
+         * @param {'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS'} [order_status] 注文状態(注文中、失効・取り消し、約定、その他・エラー)
+         * @param {string} [start_time] 期間を指定する：何日から
+         * @param {string} [end_time] 期間を指定する：何日まで
+         * @param {string} [order_by] Sort order keyword
+         * @param {number} [page_token] Request page number
+         * @param {number} [page_size] Default page_size is 10.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserOrdersGet(keyword?: string, order_status?: 'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS', start_time?: string, end_time?: string, order_by?: string, page_token?: number, page_size?: number, options: any = {}): FetchArgs {
+            const localVarPath = `/api/v1/user/orders`;
+            const localVarUrlObj = url.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign({ method: 'GET' }, baseOptions, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (keyword !== undefined) {
+                localVarQueryParameter['keyword'] = keyword;
+            }
+
+            if (order_status !== undefined) {
+                localVarQueryParameter['order_status'] = order_status;
+            }
+
+            if (start_time !== undefined) {
+                localVarQueryParameter['start_time'] = start_time;
+            }
+
+            if (end_time !== undefined) {
+                localVarQueryParameter['end_time'] = end_time;
+            }
+
+            if (order_by !== undefined) {
+                localVarQueryParameter['order_by'] = order_by;
+            }
+
+            if (page_token !== undefined) {
+                localVarQueryParameter['page_token'] = page_token;
+            }
+
+            if (page_size !== undefined) {
+                localVarQueryParameter['page_size'] = page_size;
+            }
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 購入売却を新規します
+         * @summary 新規購入売却
+         * @param {OrderConfirm} body Order object that needs to be sended to JIP
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserOrdersPost(body: OrderConfirm, options: any = {}): FetchArgs {
+            // verify required parameter 'body' is not null or undefined
+            if (body === null || body === undefined) {
+                throw new RequiredError('body','Required parameter body was null or undefined when calling apiV1UserOrdersPost.');
+            }
+            const localVarPath = `/api/v1/user/orders`
+                .replace(`{${"body"}}`, encodeURIComponent(String(body)));
+            const localVarUrlObj = url.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = Object.assign({ method: 'POST' }, baseOptions, options);
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
+
+            return {
+                url: url.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OrdersApi - functional programming interface
+ * @export
+ */
+export const OrdersApiFp = function(configuration?: Configuration) {
+    return {
+        /**
+         * 注文・約定履歴の情報を取得します
+         * @summary 注文・約定履歴
+         * @param {string} [keyword] 銘柄名・コードなどを入力
+         * @param {'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS'} [order_status] 注文状態(注文中、失効・取り消し、約定、その他・エラー)
+         * @param {string} [start_time] 期間を指定する：何日から
+         * @param {string} [end_time] 期間を指定する：何日まで
+         * @param {string} [order_by] Sort order keyword
+         * @param {number} [page_token] Request page number
+         * @param {number} [page_size] Default page_size is 10.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserOrdersGet(keyword?: string, order_status?: 'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS', start_time?: string, end_time?: string, order_by?: string, page_token?: number, page_size?: number, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Array<OrderList>> {
+            const localVarFetchArgs = OrdersApiFetchParamCreator(configuration).apiV1UserOrdersGet(keyword, order_status, start_time, end_time, order_by, page_token, page_size, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response.json();
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+        /**
+         * 購入売却を新規します
+         * @summary 新規購入売却
+         * @param {OrderConfirm} body Order object that needs to be sended to JIP
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserOrdersPost(body: OrderConfirm, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
+            const localVarFetchArgs = OrdersApiFetchParamCreator(configuration).apiV1UserOrdersPost(body, options);
+            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
+                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
+                    if (response.status >= 200 && response.status < 300) {
+                        return response;
+                    } else {
+                        throw response;
+                    }
+                });
+            };
+        },
+    }
+};
+
+/**
+ * OrdersApi - factory interface
+ * @export
+ */
+export const OrdersApiFactory = function (configuration?: Configuration, fetch?: FetchAPI, basePath?: string) {
+    return {
+        /**
+         * 注文・約定履歴の情報を取得します
+         * @summary 注文・約定履歴
+         * @param {string} [keyword] 銘柄名・コードなどを入力
+         * @param {'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS'} [order_status] 注文状態(注文中、失効・取り消し、約定、その他・エラー)
+         * @param {string} [start_time] 期間を指定する：何日から
+         * @param {string} [end_time] 期間を指定する：何日まで
+         * @param {string} [order_by] Sort order keyword
+         * @param {number} [page_token] Request page number
+         * @param {number} [page_size] Default page_size is 10.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserOrdersGet(keyword?: string, order_status?: 'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS', start_time?: string, end_time?: string, order_by?: string, page_token?: number, page_size?: number, options?: any) {
+            return OrdersApiFp(configuration).apiV1UserOrdersGet(keyword, order_status, start_time, end_time, order_by, page_token, page_size, options)(fetch, basePath);
+        },
+        /**
+         * 購入売却を新規します
+         * @summary 新規購入売却
+         * @param {OrderConfirm} body Order object that needs to be sended to JIP
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        apiV1UserOrdersPost(body: OrderConfirm, options?: any) {
+            return OrdersApiFp(configuration).apiV1UserOrdersPost(body, options)(fetch, basePath);
+        },
+    };
+};
+
+/**
+ * OrdersApi - object-oriented interface
+ * @export
+ * @class OrdersApi
+ * @extends {BaseAPI}
+ */
+export class OrdersApi extends BaseAPI {
+    /**
+     * 注文・約定履歴の情報を取得します
+     * @summary 注文・約定履歴
+     * @param {string} [keyword] 銘柄名・コードなどを入力
+     * @param {'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS'} [order_status] 注文状態(注文中、失効・取り消し、約定、その他・エラー)
+     * @param {string} [start_time] 期間を指定する：何日から
+     * @param {string} [end_time] 期間を指定する：何日まで
+     * @param {string} [order_by] Sort order keyword
+     * @param {number} [page_token] Request page number
+     * @param {number} [page_size] Default page_size is 10.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrdersApi
+     */
+    public apiV1UserOrdersGet(keyword?: string, order_status?: 'ORDER_STATUS_ORDER_IN' | 'ORDER_STATUS_INVALID' | 'ORDER_STATUS_EXECUTION_ALREADY' | 'ORDER_STATUS_OTHERS', start_time?: string, end_time?: string, order_by?: string, page_token?: number, page_size?: number, options?: any) {
+        return OrdersApiFp(this.configuration).apiV1UserOrdersGet(keyword, order_status, start_time, end_time, order_by, page_token, page_size, options)(this.fetch, this.basePath);
+    }
+
+    /**
+     * 購入売却を新規します
+     * @summary 新規購入売却
+     * @param {OrderConfirm} body Order object that needs to be sended to JIP
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrdersApi
+     */
+    public apiV1UserOrdersPost(body: OrderConfirm, options?: any) {
+        return OrdersApiFp(this.configuration).apiV1UserOrdersPost(body, options)(this.fetch, this.basePath);
+    }
+
+}
 
 /**
  * ToolsApi - fetch parameter creator
