@@ -1,3 +1,17 @@
+# swagger-mock-server
+
+## How to use
+
+`sh devServer.sh`
+
+
+## Brief introduction
+`make generate_swagger`  -> typescript-fetchのapiがsrc/api 以下に作成されます
+
+`make generate_mock`  -> nodejs-serverで作ったmockが localhost:8083 で立ち上がります
+
+`make ui`  -> swagger uiが localhost:8082で立ち上がります
+
 ## References
 https://swagger.io/docs/specification/2-0/grouping-operations-with-tags/
 

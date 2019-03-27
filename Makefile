@@ -5,7 +5,7 @@
 #  make ui  -> swagger uiが localhost:8082で立ち上がります
 #
 
-SWAGGER_FILE := swagger-user.yaml
+SWAGGER_FILE := swagger.yaml
 
 generate_swagger:
 	docker run --rm -v $(CURDIR):/local openapitools/openapi-generator-cli:v3.3.4 generate \
